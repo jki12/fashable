@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        .header {
+            display: flex;
+            width: 100%;
+            height: 9.375rem;
+            flex-shrink: 1;
+            background-color: #27374D;
+        }
+
+        .logo {
+            object-fit: contain;
+            height: 50px;
+            margin-left: 3.13rem;
+            margin-top: 3.13rem;
+        }
+
+        .body-header {
+            display: flex;
+            width: 100%;
+            height: 9.375rem;
+            flex-shrink: 1;
+            background-color: #DDE6ED;
+        }
+
+        select {
+            margin-top: 2.81rem;
+            margin-left: 18rem;
+            padding: 10px;
+            font-size: 25px;
+            width: 700px;
+            height: 60px;
+            outline: 1px;
+            border-radius: 10px;
+            padding-left: 20px;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        .region-name {
+            width: 18.75rem;
+            height: 9.375rem;
+            min-width: 18.75rem;
+            min-height: 9.375rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /*background-color: beige;
+            구역 확인용 지울 예정 */
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 50px;
+            padding: 10px;
+            background-color: #fff;
+            width: 700px;
+            height: 60px;
+            margin-top: 3.12rem;
+            margin-left: 30.5rem;
+        }
+
+        .search-box input[type="text"] {
+            border-radius: 50px;
+            border: none;
+            padding-left: 20px;
+            font-size: 16px;
+            width: 600px;
+            outline: none;
+        }
+
+        .search-box input[type="submit"] {
+            border: none;
+            background-color: #27374D;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 20px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+    </style>
+    <title>Document</title>
+</head>
+
+<body>
+    <button onclick="Location.initRegionSelectBox()"></button>
+    <scroll-rock>
+        <div class="header">
+            <a href="main.html">
+                <img class="logo" src="image/logo_navy.png"> <!-- 이미지 경로 수정 -->
+            </a>
+            <form action="#"> <!-- # = 어디로 보낼지 -->
+                <select name="region" id="region">
+                    <optgroup label="특별시">
+                        <option value="seoul">서울 특별시</option>
+                    </optgroup>
+                    <optgroup label="특별자치시">
+                        <option value="sejong">세종 특별자치시</option>
+                    </optgroup>
+                    <optgroup label="광역시">
+                        <option value="incheon">인천 광역시</option>
+                        <option value="daejeon">대전 광역시</option>
+                        <option value="gwangju">광주 광역시</option>
+                        <option value="daegu">대구 광역시</option>
+                        <option value="ulsan">울산 광역시</option>
+                        <option value="busan">부산 광역시</option>
+                    </optgroup>
+                    <optgroup label="도">
+                        <option value="gyeonggi">경기도</option>
+                        <option value="chungbuk">충청북도</option>
+                        <option value="chungnam">충청남도</option>
+                        <option value="jeonbuk">전라북도</option>
+                        <option value="jeonnam">전라남도</option>
+                        <option value="gangwon">강원도</option>
+                        <option value="gyeongbuk">경상북도</option>
+                        <option value="gyeongnam">경상남도</option>
+                    </optgroup>
+                    <optgroup label="특별자치도">
+                        <option value="jeju">제주 특별자치도</option>
+                    </optgroup>
+                </select>
+                <input type="submit" value="Submit" /> <!-- 버튼은 없애고, 선택만으로 돌아가게 할 예정 -->
+            </form>
+        </div>
+        <div class="body-header">
+            <div class="region-name">
+                <h1 id="region-name">default region</h1> <!-- 이 부분 나중에 자스건드리면서 수정해야함 -->
+            </div>
+            <div class="search-box">
+                <input type="text" placeholder="검색어를 입력해 주세요." />
+                <input type="submit" value="Search" />
+            </div>
+        </div>
+    </scroll-rock>
+
+    <script>
+        document.getElementById('region').addEventListener('change', function () {
+            var selectedOption = this.value;
+            if (selectedOption) {
+                var regionNameElement = document.getElementById('region-name');
+                regionNameElement.textContent = selectedOption; // 선택한 옵션 값으로 <h1> 요소 내용 변경
+            }
+        });
+    </script>
+    <script src="./region.js"></script>
+
+</body>
+
+</html>
