@@ -16,10 +16,14 @@ import java.util.ArrayList;
 public class NoticeController {
 
     public static ArrayList<NoticeDto> parse(String url) {
-        return parse(url, ".title > a");
+        return parse(".title > a", url, "https://www.busan.go.kr");
     }
 
-    private static ArrayList<NoticeDto> parse(String url, String cssQuery) {
+    public static ArrayList<NoticeDto> parse(String cssQuery, String url, String baseUrl) {
+        baseUrl = (baseUrl == null ? "" : baseUrl);
+
+        assert (baseUrl.charAt(baseUrl.length() - 1) != '/');
+
         ArrayList<NoticeDto> res = new ArrayList<>();
         var conn = Jsoup.connect(url);
 
@@ -29,7 +33,7 @@ public class NoticeController {
             if (doc.connection().response().statusCode() == 200) {
                 Elements notices = doc.select(cssQuery);
 
-                for (var notice : notices) res.add(new NoticeDto(notice.text(), notice.attr("href")));
+                for (var notice : notices) res.add(new NoticeDto(notice.text(), baseUrl + notice.attr("href")));
 
                 assert (notices.size() <= 30);
             }
