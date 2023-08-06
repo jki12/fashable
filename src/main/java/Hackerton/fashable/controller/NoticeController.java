@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 @RestController
 public class NoticeController {
+
     public static ArrayList<NoticeDto> parse(String url) {
         return parse(".title > a", url, "https://www.busan.go.kr");
     }
