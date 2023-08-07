@@ -1,51 +1,144 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-    <!-- jQuery 라이브러리를 추가합니다. -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin-top: 100px;
+            font-family: 'Trebuchet MS', serif;
+            line-height: 1.6
+        }
+
+        .container {
+            width: 500px;
+            margin: 0 auto;
+        }
+
+        ul.tabs {
+            margin: 0px;
+            padding: 0px;
+            list-style: none;
+        }
+
+        ul.tabs li {
+            background: none;
+            color: #222;
+            display: inline-block;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+
+        ul.tabs li.current {
+            background: #ededed;
+            color: #222;
+        }
+
+        .tab-content {
+            display: none;
+            background: #ededed;
+            padding: 15px;
+        }
+
+        .tab-content.current {
+            display: block;
+        }
+    </style>
 </head>
 <body>
-<div id="notices">
-    <!-- 공지사항이 표시될 부분입니다. -->
+<h3>hello</h3>
+<div class="container">
+    <select id="region-select">
+        <option value="Busan">Busan</option>
+        <option value="Seoul">Seoul</option>
+    </select>
+
+    <ul class="tabs">
+        <li class="tab-link current" data-tab="eco">eco</li>
+        <li class="tab-link" data-tab="wel">wel</li>
+        <li class="tab-link" data-tab="cul">cul</li>
+    </ul>
+
+    <div id="eco" class="tab-content current">
+        <ol id="eco-notices">
+            <!-- Notices for eco tab will be displayed here -->
+        </ol>
+    </div>
+
+    <div id="wel" class="tab-content">
+        <ol id="wel-notices">
+            <!-- Notices for wel tab will be displayed here -->
+        </ol>
+    </div>
+
+    <div id="cul" class="tab-content">
+        <ol id="cul-notices">
+            <!-- Notices for cul tab will be displayed here -->
+        </ol>
+    </div>
 </div>
 
 <script>
-    // 서버에서 공지사항 데이터를 가져와서 HTML을 생성하는 함수입니다.
-    function renderNotices(data) {
-        var html = '';
+    $(document).ready(function () {
+        $('ul.tabs li').click(function () {
+            var tab_id = $(this).attr('data-tab');
 
-        data.forEach(function (notice) {
-            var fullLink = 'https://busan.go.kr/' + notice.link;
-            html += '<a href="' + fullLink + '">' + notice.title + '</a><br>';
+            $('ul.tabs li').removeClass('current');
+            $('.tab-content').removeClass('current');
+
+            $(this).addClass('current');
+            $("#" + tab_id).addClass('current');
+
+            // Get the selected region and active tab
+            var selectedRegion = $('#region-select').val();
+            var activeTab = tab_id; // Use the tab_id directly as the active tab
+
+            // Update notices based on the selected region and active tab
+            getNotices(selectedRegion, activeTab);
         });
 
-        $('#notices').html(html);
+        // Region select box change event
+        $('#region-select').change(function () {
+            var selectedRegion = $(this).val();
+            var activeTab = $('.tab-link.current').attr('data-tab');
+            // Update notices based on the selected region and active tab
+            getNotices(selectedRegion, activeTab);
+        });
+    });
+
+    // 서버에서 공지사항 데이터를 가져와서 HTML을 생성하는 함수입니다.
+    function renderNotices(data, tabId) {
+        const list = document.getElementById(tabId + '-notices');
+
+        list.innerHTML = ""; // Clear previous notices
+
+        data.forEach(function (notice) {
+            let li = document.createElement('li');
+            let a = document.createElement('a');
+
+            a.href = notice.url;
+            a.textContent = notice.title;
+
+            li.appendChild(a);
+            list.appendChild(li);
+        });
     }
 
     // 서버에서 공지사항 데이터를 가져오는 함수입니다.
-    function getNotices(part) {
+    function getNotices(region, category) {
         $.ajax({
-            url: '/notices/' + part, // 해당 URL로 요청을 보냅니다. 실제로는 서버의 URL에 맞게 수정되어야 합니다.
+            url: '/notices/' + region + '/' + category, // Adjust the URL according to your backend
             type: 'GET',
             dataType: 'json',
             success: function (data) {
-                renderNotices(data); // 가져온 데이터로 HTML을 생성합니다.
+                renderNotices(data, category); // Generate HTML using the fetched data
             },
             error: function (error) {
                 console.error('Error fetching notices:', error);
             }
         });
     }
-
-/*실패    // 페이지 로드 시, URL에서 파라미터 값을 추출하여 getNotices 함수를 호출합니다.
-    $(document).ready(function () {
-        var pathArray = window.location.pathname.split('/');
-        var part = pathArray[pathArray.length - 1]; // 마지막 경로 요소를 파라미터로 사용
-
-        getNotices(part);
-    }); */
-    // 페이지 로드 시 공지사항을 가져옵니다. (예시 'eco')
-    getNotices('wel');
 </script>
 </body>
 </html>

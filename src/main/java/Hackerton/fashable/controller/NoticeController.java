@@ -1,6 +1,5 @@
 package Hackerton.fashable.controller;
 
-import Hackerton.fashable.Part;
 import Hackerton.fashable.dto.notice.NoticeDto;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -9,20 +8,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.net.URL;
 import java.util.ArrayList;
 
 @RestController
 public class NoticeController {
-
-    public static ArrayList<NoticeDto> parse(String url) {
-        return parse(".title > a", url, "https://www.busan.go.kr");
-    }
+    private static final String[] PATHS = {
+            // 순서는 경제, 문화, 복지로 보장 되어야 함
+            "ecnmnotice", "culture0101", "welnotice", "economy/news-all", "culture/news-all", "welfare/news-all"
+    };
 
     public static ArrayList<NoticeDto> parse(String cssQuery, String url, String baseUrl) {
-        baseUrl = (baseUrl == null ? "" : baseUrl);
-
-        assert (baseUrl.charAt(baseUrl.length() - 1) != '/');
+        assert (baseUrl != null);
 
         ArrayList<NoticeDto> res = new ArrayList<>();
         var conn = Jsoup.connect(url);
@@ -46,18 +42,36 @@ public class NoticeController {
         }
     }
 
-    // TODO - 현재 String part를 사용하는 부분을 enum값으로 변경하고 switch문으로 변경, 명칭, 예외, 오류 발생시 행동은 팀원과 회의 후 변경 예정입니다.
-    @GetMapping("notices/{part}")
-    public Object getNotices(@PathVariable("part") String part) {
-        String url;
+    private int toIndex(String part) {
+        switch (part) {
+            case "eco":
+                return 1;
+            case "cul":
+                return 2;
+            case "wel":
+                return 3;
+            default:
+                assert (false);
 
-        if (part.equals("eco")) url = "https://www.busan.go.kr/depart/ecnmnotice"; // 경제
-        else if (part.equals("cul")) url = "https://www.busan.go.kr/depart/culture0101"; // 문화
-        else if (part.equals("wel")) url = "https://www.busan.go.kr/depart/welnotice"; // 복지
-        else url = "https://www.busan.go.kr/depart/abnotice"; // 일자리
+                return -1;
+        }
+    }
 
-        assert (url != null || !url.equals(""));
+    @GetMapping("notices/{region}/{part}")
+    public Object getNotices(@PathVariable("region") String region, @PathVariable("part") String part) {
+        String url = "";
 
-        return parse(url);
+        switch (region) {
+            case "Busan":
+                url += "https://www.busan.go.kr/depart/" + PATHS[toIndex(part) - 1];
+
+                return parse(".title > a", url, "https://www.busan.go.kr");
+            case "Seoul":
+                // intentional fall-through
+            default:
+                url += "https://news.seoul.go.kr/" + PATHS[(toIndex(part) + PATHS.length / 2) -1];
+
+                return parse(".tit > a", url, "");
+        }
     }
 }
