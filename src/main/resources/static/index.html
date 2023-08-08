@@ -1,19 +1,134 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
-            margin-top: 100px;
-            font-family: 'Trebuchet MS', serif;
-            line-height: 1.6
+            box-sizing: border-box;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
         }
 
-        .container {
-            width: 500px;
+        .section {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .blank {
+            --blank-width: calc((100vw - 1300px) / 2);
+            width: var(--blank-width);
+            height: auto;
+            min-width: 30px;
+            background-color: #fff;
+        }
+
+        .main-body {
+            flex: 1;
+            background-color: rgb(255, 255, 255);
+            display: flex;
+            flex-direction: column;
             margin: 0 auto;
+        }
+
+        .main-body-header {
+            width: 1300px;
+            min-height: 200px;
+            background: #ffffff;
+            display: flex;
+            flex-direction: row;
+            margin-bottom: auto;
+        }
+
+        .logo {
+            object-fit: contain;
+            height: 50px;
+            margin-left: 0;
+            margin-top: 75px;
+        }
+
+        select {
+            margin-top: 75px;
+            margin-left: 150px;
+            padding: 10px;
+            font-size: 25px;
+            width: 600px;
+            height: 50px;
+            outline: 1px;
+            border-radius: 10px;
+            padding-left: 20px;
+        }
+
+        .main-container {
+            background-color: #ffffff;
+            width: 1280px;
+            border-style: solid;
+            border-width: 10px;
+            border-color: #27374D;
+            border-radius: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container-header {
+            width: 1280px;
+            height: 140px;
+            background-color: #27374D;
+            display: flex;
+            flex-direction: row;
+        }
+
+        .container-header .logo {
+            margin-top: 40px;
+            margin-left: 40px;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 50px;
+            padding: 10px;
+            background-color: #fff;
+            width: 700px;
+            height: 50px;
+            margin-top: 30px;
+            margin-left: 150px;
+        }
+
+        .search-box input[type="text"] {
+            border-radius: 50px;
+            border: none;
+            padding-left: 20px;
+            font-size: 16px;
+            width: 600px;
+            outline: none;
+        }
+
+        .search-box input[type="submit"] {
+            border: none;
+            background-color: #27374D;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 20px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .container-body {
+            margin: 50px;
+            background: #DDE6ED;
+            border-radius: 30px;
+            flex: 1;
+            min-height: 500px;
+            height: auto; /* 높이를 자동으로 조절 */
+        }
+
+        .container-body .container {
+            margin: 50px;
         }
 
         ul.tabs {
@@ -31,56 +146,119 @@
         }
 
         ul.tabs li.current {
-            background: #ededed;
+            background: #ffffff;
             color: #222;
         }
 
         .tab-content {
             display: none;
-            background: #ededed;
+            background: #ffffff;
             padding: 15px;
+            min-height: 329px;
+            margin-bottom: 50px;
         }
 
         .tab-content.current {
             display: block;
         }
+
+        .footer {
+            background-color: rgb(255, 255, 255);
+            width: 100%;
+            height: 100px;
+            display: flex;
+            position: relative;
+        }
     </style>
+    <title>new main</title>
 </head>
+
 <body>
-<h3>hello</h3>
-<div class="container">
-    <select id="region-select">
-        <option value="Busan">Busan</option>
-        <option value="Seoul">Seoul</option>
-    </select>
+<div class="section">
+    <div class="blank"></div>
+    <div class="main-body">
+        <div class="main-body-header">
 
-    <ul class="tabs">
-        <li class="tab-link current" data-tab="eco">eco</li>
-        <li class="tab-link" data-tab="wel">wel</li>
-        <li class="tab-link" data-tab="cul">cul</li>
-    </ul>
+            <a href="main.html">
+                <img class="logo" src="image/logo_white.png">
+            </a>
 
-    <div id="eco" class="tab-content current">
-        <ol id="eco-notices">
-            <!-- Notices for eco tab will be displayed here -->
-        </ol>
+            <form action="#"> <!-- # = 어디로 보낼지 -->
+                <select name="region" id="region-select">
+                    <optgroup label="특별시">
+                        <option value="Seoul">서울 특별시</option>
+                    </optgroup>
+                    <optgroup label="광역시">
+                        <option value="Busan">부산 광역시</option>
+                    </optgroup>
+                </select>
+        </div>
+
+        <div class="main-container">
+
+            <div class="container-header">
+                <a href="main.html">
+                    <img class="logo" src="image/logo_navy.png">
+                </a>
+
+                <div class="search-box">
+                    <input type="text" placeholder="검색어를 입력해 주세요." />
+                    <input type="submit" value="Search" />
+                </div>
+
+            </div>
+
+            <div class="container-body">
+
+                <div class="container">
+
+                    <ul class="tabs">
+                        <li class="tab-link current" data-tab="eco">eco</li>
+                        <li class="tab-link" data-tab="wel">wel</li>
+                        <li class="tab-link" data-tab="cul">cul</li>
+                    </ul>
+
+                    <div id="eco" class="tab-content current">
+                        <ol id="eco-notices">
+                            <!-- Notices for eco tab will be displayed here -->
+                            <li> 게시글을 불러오고 있습니다.</li>
+                        </ol>
+                    </div>
+
+                    <div id="wel" class="tab-content">
+                        <ol id="wel-notices">
+                            <!-- Notices for wel tab will be displayed here -->
+                            <li> 게시글을 불러오고 있습니다.</li>
+                        </ol>
+                    </div>
+
+                    <div id="cul" class="tab-content">
+                        <ol id="cul-notices">
+                            <!-- Notices for cul tab will be displayed here -->
+                            <li> 게시글을 불러오고 있습니다.</li>
+                        </ol>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
 
-    <div id="wel" class="tab-content">
-        <ol id="wel-notices">
-            <!-- Notices for wel tab will be displayed here -->
-        </ol>
-    </div>
+    <div class="blank"></div>
 
-    <div id="cul" class="tab-content">
-        <ol id="cul-notices">
-            <!-- Notices for cul tab will be displayed here -->
-        </ol>
-    </div>
 </div>
 
+<div class="footer"></div>
 <script>
     $(document).ready(function () {
+        adjustContainerHeights();
+
+        $(window).on('resize', function () {
+            adjustContainerHeights();
+        });
+
         $('ul.tabs li').click(function () {
             var tab_id = $(this).attr('data-tab');
 
@@ -90,55 +268,98 @@
             $(this).addClass('current');
             $("#" + tab_id).addClass('current');
 
-            // Get the selected region and active tab
             var selectedRegion = $('#region-select').val();
-            var activeTab = tab_id; // Use the tab_id directly as the active tab
 
-            // Update notices based on the selected region and active tab
-            getNotices(selectedRegion, activeTab);
+            getNotices(selectedRegion, tab_id);
+            adjustContainerHeights();
         });
 
-        // Region select box change event
         $('#region-select').change(function () {
             var selectedRegion = $(this).val();
             var activeTab = $('.tab-link.current').attr('data-tab');
-            // Update notices based on the selected region and active tab
             getNotices(selectedRegion, activeTab);
+            adjustContainerHeights();
         });
+
+        function adjustContainerHeights() {
+            var windowHeight = $(window).height();
+            var headerHeight = $('.main-body-header').height();
+            var footerHeight = $('.footer').height();
+            var tabHeight = $('.tab-content.current').height();
+
+            var calculatedHeight = windowHeight - headerHeight - footerHeight;
+
+            $('.main-container').css('min-height', calculatedHeight + 'px');
+            $('.container-body').css('min-height', calculatedHeight - tabHeight - 50 + 'px');
+        }
+
+        function renderNotices(data, tabId) {
+            const list = document.getElementById(tabId + '-notices');
+
+            list.innerHTML = "";
+
+            data.forEach(function (notice) {
+                let li = document.createElement('li');
+                let a = document.createElement('a');
+
+                a.href = notice.url;
+                a.textContent = notice.title;
+
+                li.appendChild(a);
+                list.appendChild(li);
+            });
+        }
+
+        function getNotices(region, category) {
+            $.ajax({
+                url: '/notices/' + region + '/' + category,
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    renderNotices(data, category);
+                },
+                error: function (error) {
+                    console.error('Error fetching notices:', error);
+                }
+            });
+        }
     });
-
-    // 서버에서 공지사항 데이터를 가져와서 HTML을 생성하는 함수입니다.
-    function renderNotices(data, tabId) {
-        const list = document.getElementById(tabId + '-notices');
-
-        list.innerHTML = ""; // Clear previous notices
-
-        data.forEach(function (notice) {
-            let li = document.createElement('li');
-            let a = document.createElement('a');
-
-            a.href = notice.url;
-            a.textContent = notice.title;
-
-            li.appendChild(a);
-            list.appendChild(li);
-        });
-    }
-
-    // 서버에서 공지사항 데이터를 가져오는 함수입니다.
-    function getNotices(region, category) {
-        $.ajax({
-            url: '/notices/' + region + '/' + category, // Adjust the URL according to your backend
-            type: 'GET',
-            dataType: 'json',
-            success: function (data) {
-                renderNotices(data, category); // Generate HTML using the fetched data
-            },
-            error: function (error) {
-                console.error('Error fetching notices:', error);
-            }
-        });
-    }
 </script>
 </body>
+
 </html>
+
+<!--
+                <form action="#">
+                    <select name="region" id="region">
+                        <optgroup label="특별시">
+                            <option value="seoul">서울 특별시</option>
+                        </optgroup>
+                        <optgroup label="특별자치시">
+                            <option value="sejong">세종 특별자치시</option>
+                        </optgroup>
+                        <optgroup label="광역시">
+                            <option value="incheon">인천 광역시</option>
+                            <option value="daejeon">대전 광역시</option>
+                            <option value="gwangju">광주 광역시</option>
+                            <option value="daegu">대구 광역시</option>
+                            <option value="ulsan">울산 광역시</option>
+                            <option value="busan">부산 광역시</option>
+                        </optgroup>
+                        <optgroup label="도">
+                            <option value="gyeonggi">경기도</option>
+                            <option value="chungbuk">충청북도</option>
+                            <option value="chungnam">충청남도</option>
+                            <option value="jeonbuk">전라북도</option>
+                            <option value="jeonnam">전라남도</option>
+                            <option value="gangwon">강원도</option>
+                            <option value="gyeongbuk">경상북도</option>
+                            <option value="gyeongnam">경상남도</option>
+                        </optgroup>
+                        <optgroup label="특별자치도">
+                            <option value="jeju">제주 특별자치도</option>
+                        </optgroup>
+                    </select>
+            </div>
+
+            -->
