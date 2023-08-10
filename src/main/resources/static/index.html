@@ -96,7 +96,7 @@
             width: 700px;
             height: 50px;
             margin-top: 30px;
-            margin-left: 150px;
+            margin-left: 280px;
         }
 
         .search-box input[type="text"] {
@@ -148,6 +148,8 @@
         ul.tabs li.current {
             background: #ffffff;
             color: #222;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
         }
 
         .tab-content {
@@ -160,6 +162,26 @@
 
         .tab-content.current {
             display: block;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            border-top-right-radius: 30px;
+        }
+
+        .tab-content.current li {
+            list-style: none;
+            padding: 10px;
+            white-space: nowrap; /* 줄바꿈 방지 */
+            overflow: hidden; /* 넘어가는 부분 숨김 처리 */
+            text-overflow: ellipsis; /* 넘어가는 부분 ... 처리 */
+        }
+
+        a {
+            color: black; /* 하이퍼링크 글씨 색을 검은색으로 설정 */
+            text-decoration: none; /* 밑줄 제거 */
+        }
+
+        a:hover {
+            text-decoration: underline;
         }
 
         .footer {
@@ -170,7 +192,7 @@
             position: relative;
         }
     </style>
-    <title>new main</title>
+    <title>Fashable</title>
 </head>
 
 <body>
@@ -179,8 +201,8 @@
     <div class="main-body">
         <div class="main-body-header">
 
-            <a href="main.html">
-                <img class="logo" src="image/logo_white.png">
+            <a href="index.html">
+                <img class="logo" src="image/logo_white.png"> <!-- 로고 경로 조정 필요 -->
             </a>
 
             <form action="#"> <!-- # = 어디로 보낼지 -->
@@ -192,17 +214,15 @@
                         <option value="Busan">부산 광역시</option>
                     </optgroup>
                 </select>
+            </form>
         </div>
 
         <div class="main-container">
 
             <div class="container-header">
-                <a href="main.html">
-                    <img class="logo" src="image/logo_navy.png">
-                </a>
 
                 <div class="search-box">
-                    <input type="text" placeholder="검색어를 입력해 주세요." />
+                    <input type="text" placeholder="검색어를 입력해 주세요. (미구현)" />
                     <input type="submit" value="Search" />
                 </div>
 
@@ -213,9 +233,9 @@
                 <div class="container">
 
                     <ul class="tabs">
-                        <li class="tab-link current" data-tab="eco">eco</li>
-                        <li class="tab-link" data-tab="wel">wel</li>
-                        <li class="tab-link" data-tab="cul">cul</li>
+                        <li class="tab-link current" data-tab="eco">경제</li>
+                        <li class="tab-link" data-tab="wel">복지</li>
+                        <li class="tab-link" data-tab="cul">문화</li>
                     </ul>
 
                     <div id="eco" class="tab-content current">
@@ -328,38 +348,3 @@
 </body>
 
 </html>
-
-<!--
-                <form action="#">
-                    <select name="region" id="region">
-                        <optgroup label="특별시">
-                            <option value="seoul">서울 특별시</option>
-                        </optgroup>
-                        <optgroup label="특별자치시">
-                            <option value="sejong">세종 특별자치시</option>
-                        </optgroup>
-                        <optgroup label="광역시">
-                            <option value="incheon">인천 광역시</option>
-                            <option value="daejeon">대전 광역시</option>
-                            <option value="gwangju">광주 광역시</option>
-                            <option value="daegu">대구 광역시</option>
-                            <option value="ulsan">울산 광역시</option>
-                            <option value="busan">부산 광역시</option>
-                        </optgroup>
-                        <optgroup label="도">
-                            <option value="gyeonggi">경기도</option>
-                            <option value="chungbuk">충청북도</option>
-                            <option value="chungnam">충청남도</option>
-                            <option value="jeonbuk">전라북도</option>
-                            <option value="jeonnam">전라남도</option>
-                            <option value="gangwon">강원도</option>
-                            <option value="gyeongbuk">경상북도</option>
-                            <option value="gyeongnam">경상남도</option>
-                        </optgroup>
-                        <optgroup label="특별자치도">
-                            <option value="jeju">제주 특별자치도</option>
-                        </optgroup>
-                    </select>
-            </div>
-
-            -->
